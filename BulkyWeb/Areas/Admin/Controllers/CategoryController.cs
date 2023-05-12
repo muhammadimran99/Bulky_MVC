@@ -4,8 +4,9 @@ using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BulkyWeb.Controllers
+namespace BulkyWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _UnitOfWork;
@@ -28,8 +29,8 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-           
-            if(ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
                 _UnitOfWork.Category.Add(obj);
                 _UnitOfWork.Save();
@@ -41,14 +42,14 @@ namespace BulkyWeb.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if(id==null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
 
             Category? categoryFromDb = _UnitOfWork.Category.Get(u => u.Id == id);
 
-            if(categoryFromDb == null)
+            if (categoryFromDb == null)
             {
                 return NotFound();
             }
